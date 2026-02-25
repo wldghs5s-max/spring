@@ -1,0 +1,11 @@
+#hobby-area{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-auto-rows: 1fr;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+.text-red{
+    color: red;
+    font-size: 700;
+}
