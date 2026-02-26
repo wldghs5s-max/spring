@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class MemberService {
     }
 
     private void checkIdValid(String id) {
-        if(id.length() >= 4 && id.length() <=12){
+        if(id != null && id.length() >= 4 && id.length() <=12){
             return;
         }else {
             throw new IllegalArgumentException("[M-101] id length");
@@ -57,7 +58,7 @@ public class MemberService {
     }
 
     private void checkPwValid(String pw) {
-        if(pw.length() >= 4 && pw.length() <=12){
+        if(pw != null && pw.length() >= 4 && pw.length() <=12){
             return;
         }else {
             throw new IllegalArgumentException("[M-102] pw length");
@@ -65,7 +66,7 @@ public class MemberService {
     }
 
     private void checkNickValid(String nick) {
-        if(nick.length() >= 2 && nick.length() <=12){
+        if(nick != null && nick.length() >= 2 && nick.length() <=12){
             return;
         }else {
             throw new IllegalArgumentException("[M-103] nick length");
@@ -82,7 +83,38 @@ public class MemberService {
         return isMatch ? dbVo : null;
     }
 
+    @Transactional
     public int quit(String no) {
         return memberMapper.quit(no);
+    }
+
+    @Transactional
+    public MemberVo edit(MemberVo vo, MultipartFile profile, String profileChangeName) throws IOException {
+        checkEditValidation(vo);
+        if (vo.getPw()!=null && !vo.getPw().isEmpty()){
+            String encodedPw = bCryptPasswordEncoder.encode(vo.getPw());
+            vo.setPw(encodedPw);
+        }
+        //save file and delete old
+        if(profile!=null && !profile.isEmpty()){
+            String changeName = FileUploader.upload(profile, filePath);
+            vo.setProfileChangeName(changeName);
+            vo.setProfileOriginName(profile.getOriginalFilename());
+
+            File oldFile = new File(filePath+profileChangeName);
+
+                oldFile.delete();
+
+
+        }
+
+        int result =  memberMapper.edit(vo);
+        if(result != 1){return null;}
+        return memberMapper.selectByNo(vo.getNo());
+    }
+
+    private void checkEditValidation(MemberVo vo) {
+        if(vo.getPw()!=null && !vo.getPw().isEmpty()){checkPwValid(vo.getPw());}
+        if(vo.getNick()!=null && !vo.getNick().isEmpty()){checkNickValid(vo.getNick());}
     }
 }

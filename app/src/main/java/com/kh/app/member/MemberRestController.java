@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -86,5 +87,32 @@ public class MemberRestController {
             throw new IllegalStateException("[M-500]");
         }
         return ResponseEntity.ok();
+    }
+    @PutMapping("edit")
+    public ResponseEntity<HashMap<String, String>> edit(
+            MemberVo vo,
+            HttpSession session ,
+            @RequestParam(required = false) MultipartFile profile
+    ) throws IOException {
+        MemberVo loginMemberVo = (MemberVo)session.getAttribute("loginMemberVo");
+        if (loginMemberVo==null){
+            throw new IllegalStateException("[M401] need login");
+        }
+        vo.setNo(loginMemberVo.getNo());
+        MemberVo updatedMemberVo = memberService.edit(vo,profile,loginMemberVo.getProfileChangeName());
+        HashMap<String,String> map = new HashMap<>();
+
+        if (updatedMemberVo == null){
+            String errMsg = "[M-411] updated fail..";
+            log.error(errMsg);
+            throw new IllegalStateException(errMsg);
+        }
+        map.put("msg", "회원 정보 수정 잘 됨 ~~~");
+
+        session.setAttribute("loginMemberVo", updatedMemberVo);
+
+        return ResponseEntity
+                .ok()
+                .body(map);
     }
 }

@@ -1,5 +1,10 @@
 function join(){
 
+    if(pwMatchResult.innerHTML==="비밀번호 불일치"){
+        alert("비밀번호를 확인해주세요.");
+        return;
+    }
+
     const id = document.querySelector("main input[name=id]").value;
     const pw = document.querySelector("main input[name=pw]").value;
     const nick = document.querySelector("main input[name=nick]").value;
@@ -51,15 +56,17 @@ function join(){
 }
 
 // 비밀번호 일치여부 체크
-const pw = document.querySelector("input[name=pw]");
-const pw2 = document.querySelector("input[name=pw2]");
+const pw = document.querySelector("main input[name=pw]");
+const pw2 = document.querySelector("main input[name=pw2]");
 const pwMatchResult = document.querySelector("#pwMatchResult");
 
 pw2.addEventListener("blur" , function(){
     if(pw.value === pw2.value){
         pwMatchResult.classList.remove("text-red");
+        pwMatchResult.classList.add("text-green");
         pwMatchResult.innerHTML = "비밀번호 일치";
     }else{
+        pwMatchResult.classList.remove("text-green");
         pwMatchResult.classList.add("text-red");
         pwMatchResult.innerHTML = "비밀번호 불일치";
     }

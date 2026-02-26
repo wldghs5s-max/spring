@@ -33,7 +33,7 @@
         <label>프로필 사진 : </label>
         <input type="file" name="profile">
         <br>
-        <input type="button" value="정보수정" onclick="edit();">
+        <input type="button" value="수정하기" onclick="edit();">
         <input type="button" value="탈퇴하기" onclick="quit();">
     </form>
 </main>
