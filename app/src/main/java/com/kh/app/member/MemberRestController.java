@@ -115,4 +115,5 @@ public class MemberRestController {
                 .ok()
                 .body(map);
     }
+
 }
