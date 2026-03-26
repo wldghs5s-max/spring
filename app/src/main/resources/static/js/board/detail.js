@@ -6,7 +6,17 @@ async function loadBoardVo(){
     }
     const data = await resp.json();
     const vo = data.vo;
+    // 이게 없을수도 있잖아
+    const likeStatus = data.likeStatus;
+    const likeCount = data.likeCount;
 
+    const btnLike = document.querySelector("#btn-like");
+        if(likeStatus){
+            btnLike.innerHTML = "💚";
+        }else{
+            btnLike.innerHTML = "🤍";
+        }
+    document.querySelector("#likeCount").innerHTML = likeCount;
     document.querySelector("#writerNick").innerHTML = vo.writerNick;
     document.querySelector("#hit").innerHTML = vo.hit;
     document.querySelector("#createdAt").innerHTML = vo.createdAt;
@@ -101,6 +111,29 @@ async function del(no){
         }
         alert("댓삭튀 성공!");
         loadReply();
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+async function like(){
+    try {
+        const boardNo = location.pathname.split("/").pop();
+        const resp = await fetch(`/board/like/${boardNo}`,{
+            method : "POST",
+            
+        })
+        if(!resp.ok){
+            throw new Error("like fail.. resp not ok");
+        }
+        const data = await resp.json();
+        const btnLike = document.querySelector("#btn-like");
+        if(data.likeStatus){
+            btnLike.innerHTML = "💚";
+        }else{
+            btnLike.innerHTML = "🤍";
+        }
     } catch (error) {
         console.log(error);
         

@@ -26,6 +26,7 @@
         <tbody></tbody>
     </table>
     <input type="button" value="글쓰기" onclick="location.href=`/board/insert`">
+    <div id="page-area"></div>
 </main>
 
 </body>

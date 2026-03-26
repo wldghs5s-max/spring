@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%
-            System.out.println("JSP ~~~");
-         %>
 
 <!DOCTYPE html>
 <html>
 <head>
-
     <meta charset="UTF-8">
-    <title>헬로월드</title>
-
+    <title>세미</title>
 </head>
 <body>
-<h1>HOME ~ !</h1>
+
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+
+<main>
+    <h1>에러 발생!</h1>
+</main>
+
 </body>
 </html>

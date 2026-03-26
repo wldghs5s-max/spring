@@ -36,7 +36,7 @@
 </header>
 
 <nav>
-    <div><a href="/board/list">게시판</a></div>
+    <div><a href="/board/list/1">게시판</a></div>
     <div>02</div>
     <div>03</div>
     <div>04</div>

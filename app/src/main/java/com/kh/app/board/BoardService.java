@@ -1,11 +1,13 @@
 package com.kh.app.board;
 
+import com.kh.app.util.PageVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -24,8 +26,8 @@ public class BoardService {
 
     }
 
-    public List<BoardVo> selectList() {
-        return boardMapper.selectList();
+    public List<BoardVo> selectList(PageVo pvo) {
+        return boardMapper.selectList(pvo);
     }
 
     @Transactional
@@ -43,7 +45,35 @@ public class BoardService {
         return boardMapper.updateByNo(vo);
     }
 
+    @Transactional
     public int deleteByNo(BoardVo vo) {
         return boardMapper.deleteByNo(vo);
+    }
+
+    public int selectCount() {
+        return boardMapper.selectCount();
+    }
+
+    @Transactional
+    public boolean like(Map<String, Object> map) {
+        int result = boardMapper.existlike(map);
+        if (result==1){
+            boardMapper.deletetlike(map);
+            return false;
+        }else{
+            boardMapper.insertlike(map);
+            return true;
+        }
+
+
+    }
+
+    public int getLikeStatus(String memberNo, String boardNo) {
+        int result = boardMapper.existlike2(memberNo,boardNo);
+        return result;
+    }
+
+    public int selectLikeCount(String no) {
+        return boardMapper.selectLikeCount(no);
     }
 }

@@ -1,18 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%
-            System.out.println("JSP ~~~");
-         %>
 
 <!DOCTYPE html>
 <html>
 <head>
-
     <meta charset="UTF-8">
-    <title>헬로월드</title>
+    <title>에러페이지</title>
 
 </head>
 <body>
-<h1>HOME ~ !</h1>
+    <h1>에러페이지</h1>
 </body>
 </html>

@@ -24,8 +24,10 @@ public class BoardViewController {
         }
     }
 
-    @GetMapping("list")
-    public void list(){}
+    @GetMapping("list/{pno}")
+    public String list(){
+        return "board/list";
+    }
 
     @GetMapping("detail/{no}")
     public String detail(){

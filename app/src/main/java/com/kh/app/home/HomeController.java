@@ -9,4 +9,8 @@ public class HomeController {
     public String home(){
         return "home";
     }
+    @GetMapping("error")
+    public String error(){
+        return "error/all";
+    }
 }

@@ -21,6 +21,8 @@
         <br>
         <label>조회수 : </label><span id="hit"></span>
         <br>
+        <label>좋아요 : </label><span id="likeCount"></span>
+        <br>
         <label>작성일시 : </label><span id="createdAt"></span>
         <br>
         <input type="text" name="title" placeholder="제목을 입력하세요" readonly> 
@@ -41,6 +43,7 @@
         <div id="reply-insert-area">
             <textarea name="reply-content" placeholder="댓글을 입력하세요"></textarea>
             <button onclick="insertReply();">댓글등록</button>
+            <button onclick="like();" id="btn-like">🤍</button>
         </div>
         <div id="reply-list-area">
             
